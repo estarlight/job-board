@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+    <style>
+        .mainrow {
+            display: flex;
+        }
+
+        .maincolumn {
+            flex: 50%;
+        }
+    </style>
+
+    <!-- Compiled and minified CSS -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/css/materialize.min.css">
+
+<!-- Compiled and minified JavaScript -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/js/materialize.min.js"></script>
+    
+</head>
+<body>
+<div class="container" style="text-align: center">
+
+    <h2>Handy Helper Job Board | Dashboard</h2>
+
+    <div class="row">
+        <div class="col s3">
+                <p>Welcome {{ logged_user.first_name }}    |  <a href="/logout">   Log Off</a></p>
+        </div>
+        <div class="col s6"></div>   
+        <div class="col s3">
+            <p><a href = "/createjob">Create A Job</a></p>
+            </div>   
+        </div>
+
+    <div class="mainrow">
+    <div class="maincolumn">
+        <table class="striped centered">
+            <thead>
+                <tr>
+                    <th>Job</th>
+                    <th>Location</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for j in jobs %}
+                <tr>
+                <td><p>{{ j.title }}</p></td>
+                <td>{{ j.location }} </td>
+                <td>
+                    
+                    <p><a href="/view/{{ j.id }}">View</a></p>
+                    <p><a href="/addjob/{{j.id}}">Add</a></p>
+                        {% if logged_user.id == j.created_user.id %}
+                
+                        <p><a href="/edit/{{ j.id }}">Edit</a></p>
+                        <p><a href="/cancel/{{ j.id }}">Cancel</a></p>
+                        {% endif %}
+                    {% endfor %}
+                </td>
+                </tr>
+                
+            </tbody>
+        </table>
+    </div>
+
+    <div class="maincolumn">
+        <table class="striped centered">
+            <thead>
+                <tr>
+                    <th>My Jobs</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for j in my_jobs %}
+                <tr>
+                    <td>{{j.title}} </td>
+                    <td>
+                        <a href="/view/{{ j.id }}">  View</a>  |  
+                        <a href="/done/{{ j.id }}">Done</a>
+                    </td>
+                </tr>
+                {% endfor %}
+                
+            </tbody>
+        </table>
+
+
+
+
+    </div>
+    
+
+
+
+
+
+
+
+
+    </div>
+
+</div>
+    
+</body>
+</html>
